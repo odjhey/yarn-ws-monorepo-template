@@ -1,5 +1,5 @@
 import { UserCreatesTodos } from "@repo/core-todo";
-import { implementations } from "@repo/database";
+import { PrismaImplementations } from "@repo/database";
 
 import { hello } from "./hello";
 
@@ -8,12 +8,10 @@ const main = async () => {
   const myCreate = UserCreatesTodos.userCreatesTodos({
     isAdmin: true,
     username: "juan",
-  })({
-    saveTodo: implementations.Deps.saveTodo,
-  });
+  })(PrismaImplementations);
 
   const result = await myCreate({
-    todos: ["todo1", "todo2"],
+    todos: ["todo1", "todoalskjdf2"],
   });
 
   console.log(JSON.stringify(result, null, 2));

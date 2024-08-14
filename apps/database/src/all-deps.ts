@@ -10,8 +10,8 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   : never;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CombineDeps<T extends { Deps: any }[]> = {
-  Deps: UnionToIntersection<DepsOf<T[number]>>;
-};
+type CombineDeps<T extends { Deps: any }[]> = UnionToIntersection<
+  DepsOf<T[number]>
+>;
 
 export type AllDeps = CombineDeps<[{ Deps: UserCreatesTodos.Deps }]>;
