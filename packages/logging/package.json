@@ -1,0 +1,9 @@
+{
+  "name": "@repo/logging",
+  "version": "0.0.0",
+  "types": "dist/src/logger.d.ts",
+  "main": "dist/src/logger.js",
+  "devDependencies": {
+    "@repo/eslint-config": "*"
+  }
+}
