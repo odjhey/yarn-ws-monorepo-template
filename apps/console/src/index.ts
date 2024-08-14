@@ -1,4 +1,5 @@
 import { UserCreatesTodos } from "@repo/core-todo";
+import { implementations } from "@repo/database";
 
 import { hello } from "./hello";
 
@@ -8,10 +9,7 @@ const main = async () => {
     isAdmin: true,
     username: "juan",
   })({
-    saveTodo: async ({ username: _, todos }) => ({
-      ok: true,
-      data: todos.map((todo) => ({ id: "idddd___" + todo })),
-    }),
+    saveTodo: implementations.Deps.saveTodo,
   });
 
   const result = await myCreate({
