@@ -433,8 +433,32 @@ __metadata:
     eslint: "npm:8"
     prettier: "npm:^3.3.3"
     ramda: "npm:^0.30.1"
+    ts-pattern: "npm:^5.3.1"
     typescript: "npm:^5.5.4"
     vitest: "npm:^2.0.5"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
+
+"@repo/core-todo@workspace:apps/core-todo":
+  version: 0.0.0-use.local
+  resolution: "@repo/core-todo@workspace:apps/core-todo"
+  dependencies:
+    "@repo/cross-concerns": "npm:*"
+    "@repo/eslint-config": "npm:*"
+    "@repo/typescript-config": "npm:*"
+    "@repo/utils": "npm:*"
+    "@repo/vitest-config": "npm:*"
+    "@types/ramda": "npm:^0"
+    "@vitest/coverage-v8": "npm:^2.0.5"
+    "@vitest/ui": "npm:^2.0.5"
+    eslint: "npm:8"
+    prettier: "npm:^3.3.3"
+    ramda: "npm:^0.30.1"
+    ts-pattern: "npm:^5.3.1"
+    typescript: "npm:^5.5.4"
+    vitest: "npm:^2.0.5"
+    zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
 
@@ -463,6 +487,16 @@ __metadata:
 "@repo/typescript-config@npm:*, @repo/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@repo/typescript-config@workspace:packages/typescript-config"
+  languageName: unknown
+  linkType: soft
+
+"@repo/utils@npm:*, @repo/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@repo/utils@workspace:packages/utils"
+  dependencies:
+    "@repo/eslint-config": "npm:*"
+    "@repo/typescript-config": "npm:*"
+    typescript: "npm:^5.5.4"
   languageName: unknown
   linkType: soft
 
@@ -3784,6 +3818,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-pattern@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "ts-pattern@npm:5.3.1"
+  checksum: 10c0/4d5082edb2d0a198a4f46abc834317fa2be616277be7721df71a93ea33180b85443ae2e92ff28a0cda51f038b5e347b35ad79936a55ed468e23268fbc48503a1
+  languageName: node
+  linkType: hard
+
 "ts-toolbelt@npm:^9.6.0":
   version: 9.6.0
   resolution: "ts-toolbelt@npm:9.6.0"
@@ -4261,5 +4302,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard
