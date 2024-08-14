@@ -423,6 +423,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@repo/console@workspace:apps/console"
   dependencies:
+    "@repo/core-todo": "npm:*"
     "@repo/cross-concerns": "npm:*"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
@@ -440,7 +441,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@repo/core-todo@workspace:apps/core-todo":
+"@repo/core-todo@npm:*, @repo/core-todo@workspace:apps/core-todo":
   version: 0.0.0-use.local
   resolution: "@repo/core-todo@workspace:apps/core-todo"
   dependencies:
