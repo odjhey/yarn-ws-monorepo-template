@@ -5,6 +5,7 @@
   "main": "dist/src/index.js",
   "devDependencies": {
     "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
     "typescript": "^5.5.4"
   }
 }

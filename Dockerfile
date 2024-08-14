@@ -3,7 +3,9 @@ FROM node:20-alpine as build
 WORKDIR /monorepo
 
 COPY package.json yarn.lock ./
+COPY .yarnrc.yml .yarnrc.yml
 
+RUN corepack enable
 RUN yarn
 
 COPY packages packages
