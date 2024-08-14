@@ -1,51 +1,52 @@
 import type { Result, Empty } from "@repo/utils";
 
+import * as B from "@swan-io/boxed";
 import { curry } from "ramda";
 import { z } from "zod";
 
-type Operation<Ctx, Deps, Inputs, R> = (
-  ctx: Ctx,
-  deps: Deps,
-  inputs: Inputs,
-) => R;
+import { Operation } from "../commons";
+import * as Validations from "../commons/validations";
+import { AuthContext } from "../contexts/auth.context";
+
+export type Deps = {
+  saveTodo: (data: {
+    username: string;
+    todos: string[];
+  }) => Promise<Result<{ id: string }[], { failed: Empty }>>;
+};
 
 const InputSchema = z.object({ todos: z.array(z.string()) });
-
-export const userCreatesTodos = curry<
-  Operation<
-    { username: string; isAdmin: boolean },
-    {
-      saveTodo: (data: {
-        username: string;
-        todos: string[];
-      }) => Promise<Result<{ id: string }[], { failed: Empty }>>;
-    },
-    z.input<typeof InputSchema>,
-    Promise<
-      Result<
-        { todoIds: { id: string }[] },
-        { failed: Empty; notAuthorized: Empty; invalidInput: Empty }
-      >
+type OperationType = Operation<
+  AuthContext,
+  Deps,
+  z.input<typeof InputSchema>,
+  Promise<
+    Result<
+      { todoIds: { id: string }[] },
+      { failed: Empty; notAuthorized: Empty; invalidInput: Empty }
     >
   >
->(async (ctx, deps, inputs) => {
-  if (!ctx.isAdmin) {
-    return { ok: false, errorKind: "notAuthorized" };
-  }
+>;
 
-  const validatedInput = InputSchema.safeParse(inputs);
-  if (validatedInput.success === false) {
-    return { ok: false, errorKind: "invalidInput" };
-  }
+export const userCreatesTodos = curry<OperationType>(
+  async (ctx, deps, input) => {
+    const validateResults = B.Result.Ok(ctx)
+      .flatMap(Validations.isAdmin)
+      .flatMap(() => Validations.schemaValidate(input, InputSchema));
 
-  const result = await deps.saveTodo({
-    username: ctx.username,
-    todos: inputs.todos,
-  });
+    if (validateResults.isError()) {
+      return { ok: false, errorKind: validateResults.error.errorKind };
+    }
 
-  if (!result.ok) {
-    return { ok: false, errorKind: "failed" };
-  }
+    const result = await deps.saveTodo({
+      username: ctx.username,
+      todos: input.todos,
+    });
 
-  return { ok: true, data: { todoIds: result.data } };
-});
+    if (!result.ok) {
+      return { ok: false, errorKind: "failed" };
+    }
+
+    return { ok: true, data: { todoIds: result.data } };
+  },
+);
