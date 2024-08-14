@@ -6,3 +6,11 @@ export const NoopLogger: Logger = {
   error: () => {},
   warn: () => {},
 };
+
+export const SomeLogger: Logger = {
+  info: (...args) => {
+    console.log("SomeLogger.info", ...args);
+  },
+  error: () => {},
+  warn: () => {},
+};

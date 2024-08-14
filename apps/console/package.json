@@ -2,8 +2,8 @@
   "name": "@repo/console",
   "version": "0.0.0",
   "devDependencies": {
+    "@repo/cross-concerns": "*",
     "@repo/eslint-config": "*",
-    "@repo/logging": "*",
     "@repo/typescript-config": "*",
     "eslint": "8",
     "prettier": "^3.3.3",
