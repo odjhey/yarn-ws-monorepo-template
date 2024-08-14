@@ -1,6 +1,9 @@
 {
   "name": "@repo/console",
   "version": "0.0.0",
+  "scripts": {
+    "start": "node dist/src/index.js"
+  },
   "devDependencies": {
     "@repo/cross-concerns": "*",
     "@repo/eslint-config": "*",
