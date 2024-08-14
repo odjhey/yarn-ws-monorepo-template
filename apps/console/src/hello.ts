@@ -1,11 +1,10 @@
-import { ConsoleLogger, SomeLogger } from "@repo/cross-concerns";
+import { CommonContext } from "./context";
 
-const hello = () => {
-  console.log("yaharu!");
-  ConsoleLogger.info({}, "yaharu!");
-  SomeLogger.info({}, "yaharu!");
-
-  return "world";
-};
+const hello =
+  (ctx = CommonContext()) =>
+  () => {
+    ctx.logger.info({}, "hello");
+    return "world";
+  };
 
 export { hello };
