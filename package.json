@@ -1,8 +1,16 @@
 {
+  "name": "repo",
   "private": true,
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
-  "packageManager": "yarn@4.4.0"
+  "scripts": {
+    "build": "turbo build",
+    "build:watch": "turbo watch build"
+  },
+  "packageManager": "yarn@4.4.0",
+  "devDependencies": {
+    "turbo": "^2.0.12"
+  }
 }
