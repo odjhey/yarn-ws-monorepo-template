@@ -9,7 +9,7 @@ export const isAdmin = (v: AuthContext) =>
     ? B.Result.Ok(v)
     : B.Result.Error({ errorKind: "notAuthorized" } as const);
 
-export const schemaValidate = (input: unknown, schema: z.Schema) => {
+export const schemaValidate = <T>(input: unknown, schema: z.Schema<T>) => {
   const validationResult = schema.safeParse(input);
   return validationResult.success
     ? B.Result.Ok(validationResult.data)

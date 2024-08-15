@@ -1,10 +1,9 @@
 import type { Result, Empty } from "@repo/utils";
 
 import * as B from "@swan-io/boxed";
-import { curry } from "ramda";
 import { z } from "zod";
 
-import { Operation } from "../commons";
+import { curryOperation, Operation } from "../commons";
 import * as Validations from "../commons/validations";
 import { AuthContext } from "../contexts/auth.context";
 
@@ -13,9 +12,12 @@ export type Deps = {
     username: string;
     todos: string[];
   }) => Promise<Result<{ id: string }[], { failed: Empty }>>;
+  readFileContents: (data: {
+    filename: string;
+  }) => Promise<Result<{ todos: string[] }, { readFailed: Empty }>>;
 };
 
-const InputSchema = z.object({ todos: z.array(z.string()) });
+const InputSchema = z.object({ filename: z.string().min(1) });
 type OperationType = Operation<
   AuthContext,
   Deps,
@@ -23,12 +25,17 @@ type OperationType = Operation<
   Promise<
     Result<
       { todoIds: { id: string }[] },
-      { failed: Empty; notAuthorized: Empty; invalidInput: Empty }
+      {
+        failed: Empty;
+        notAuthorized: Empty;
+        invalidInput: Empty;
+        failedToRead: Empty;
+      }
     >
   >
 >;
 
-export const userCreatesTodos = curry<OperationType>(
+export const userUploadsBigFiles = curryOperation<OperationType>(
   async (ctx, deps, input) => {
     const validateResults = B.Result.Ok(ctx)
       .flatMap(Validations.isAdmin)
@@ -38,9 +45,17 @@ export const userCreatesTodos = curry<OperationType>(
       return { ok: false, errorKind: validateResults.error.errorKind };
     }
 
+    const contents = await deps.readFileContents({
+      filename: validateResults.value.filename,
+    });
+
+    if (!contents.ok) {
+      return { ok: false, errorKind: "failedToRead" };
+    }
+
     const result = await deps.saveTodo({
+      todos: contents.data.todos,
       username: ctx.username,
-      todos: validateResults.value.todos,
     });
 
     if (!result.ok) {
